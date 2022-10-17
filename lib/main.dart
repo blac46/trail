@@ -67,7 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 OutlinedButton.icon(
                   onPressed: () {
-                    login();
+                    login(
+                      emailController.text,
+                      passController.text,
+                      context
+                    );
                   },
                   icon: Icon(
                     Icons.login,
@@ -84,13 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ///FUNCTION TO CALL API LOGIN
-  Future<void> login() async {
-    if (passController.text.isNotEmpty && emailController.text.isNotEmpty) {
+  Future<void> login(String email,String pass,context) async {
+    if (pass.isNotEmpty && email.isNotEmpty) {
       var respond = await http.post(
           Uri.parse("http://172.105.251.144:8000/api/login"),
           body: ({
-            "email": emailController.text,
-            'password': passController.text
+            "email": email,
+            'password': pass
           }));
       if (respond.statusCode == 200) {
         Navigator.push(
